@@ -1,26 +1,84 @@
 <div class="container">
+  <table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Source</th>
+      <th>Description</th>
+      <th>Image</th>
+      <th>Actions</th>
+    </tr>
+    <tr *ngFor="let media of mediaSourceList">
+      <td>{{ media.name }}</td>
+      <td>{{ media.source }}</td>
+      <td>{{ media.description }}</td>
+      <td>{{ media.image }}</td>
+      <td>
+        <div class="btn-group">
+          <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalDelete" (click)="idToDelete = media.id">
+            <i class="bi bi-trash-fill"></i>
+          </button>
+          <button type="button" class="btn btn-outline-success">
+            <i class="bi bi-pencil-fill"></i>
+          </button>
+        </div>
+      </td>
+    </tr>
+  </thead>
+  </table>
+  <button class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalAdd">
+    Add<i class="bi bi-plus"></i>
+  </button>
 
-  <div class="card mt-3 p-2">
-    <div class="mt-2">
-      <h3>Add Media Source</h3>
-    </div>
-    <div class="mb-3">
-      <label for="exampleFormControlInput1" class="form-label">Name</label>
-      <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name">
-    </div>
-    <div class="mb-3">
-      <label for="exampleFormControlInput1" class="form-label">Source</label>
-      <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="source">
-    </div>
-    <div class="mb-3">
-      <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-    </div>
-    <div class="input-group mb-3">
-      <input type="file" class="form-control" id="inputGroupFile02">
-    </div>
-    <div class="mb-2 d-grid d-md-flex">
-      <button class="btn btn-primary" type="button">Save</button>
+  <div class="modal fade" id="modalAdd">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">Add Media Source</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="mediaSourceForm" (ngSubmit)="onSubmit(mediaSourceForm)">
+            <div class="mb-2">
+              <label for="name" class="form-label">Name</label>
+              <input type="text" class="form-control" id="name" formControlName="name" placeholder="name">
+            </div>
+            <div class="mb-2">
+              <label for="source" class="form-label">Source</label>
+              <input type="text" class="form-control" id="source" formControlName="source" placeholder="source">
+            </div>
+            <div class="mb-2">
+              <label for="description" class="form-label">Description</label>
+              <textarea class="form-control" id="description" formControlName="description" rows="2"></textarea>
+            </div>
+            <div class="input-group mb-3">
+              <input type="file" class="form-control" id="image">
+            </div>
+            <div class="mb-2">
+              <button class="btn btn-primary" type="submit" data-bs-dismiss="modal">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
+
+  <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modalDeleteLabel">Delete Media Source</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h3>Are you sure you want to delete this media source?</h3>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" (click)="deleteMediaSource()">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
